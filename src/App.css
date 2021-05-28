@@ -1,6 +1,4 @@
-h1 {
+.App-footer {
   text-align: center;
-  color: blueviolet;
-  font-family: goth;
-  font-size: 60px;
+  margin: 30px 0;
 }

@@ -12,7 +12,10 @@ export default function Dictionary (){
     function search (event) {
         event.preventDefault();
 
+         // eslint-disable-next-line
+
         let apiUrl = ` https://api.dictionaryapi.dev/api/v2/entries/en_US/${keyword}`;
+         // eslint-disable-next-line
         axios.get(apiUrl). then(handleResponse);
     }
 

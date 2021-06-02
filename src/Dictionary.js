@@ -3,22 +3,27 @@ import axios from "axios";
 import Results from "./Results";
 import "./Dictionary.css";
 
-export default function Dictionary (){
-    let [keyword, setKeyword] = useState("");
+export default function Dictionary (props){
+    let [keyword, setKeyword] = useState(props.defaultKeyword);
     let [results, setResults] = useState(null);
+    let [loaded, setLoaded] = useState(false);
 
     function handleResponse (response){
         setResults(response.data[0]);
     }
 
-    function search (event) {
-        event.preventDefault();
-
-         // eslint-disable-next-line
+    function search () {
+   // eslint-disable-next-line
 
         let apiUrl = ` https://api.dictionaryapi.dev/api/v2/entries/en_US/${keyword}`;
          // eslint-disable-next-line
         axios.get(apiUrl). then(handleResponse);
+    }
+
+    function handleSubmit (event) {
+        event.preventDefault();
+      search ();
+      
     }
 
  
@@ -26,12 +31,28 @@ export default function Dictionary (){
     function handleKeywordChange(event){
         setKeyword(event.target.value);
     }
-    return ( 
+
+    function load (){
+        setLoaded(true);
+        search();
+    }
+
+if  (loaded){
+ return ( 
         <div className="Dictionary">
-            <form onSubmit ={search}>
-                <input type="search" onChange={handleKeywordChange} autoFocus={true} />
+            <section>
+                <h1>What Word do you want to look up</h1>
+            <form onSubmit ={handleSubmit}>
+                <input type="search" onChange={handleKeywordChange} autoFocus={true} defaultValue={props.defaultKeyword} />
             </form>
+            </section>
             <Results results={results} />
         </div>
     );
+} else{
+    load();
+    return "Loading";
 }
+}
+
+   
